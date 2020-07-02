@@ -1,0 +1,5 @@
+example.property: "I AM IN THE DEFAULT"
+spring.jpa.show-sql: "true"
+spring.jpa.hibernate.ddl-auto: "create-drop"
+spring.datasource.testWhileIdle: "true"
+spring.datasource.validationQuery: "SELECT 1"
