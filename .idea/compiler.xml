@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="organizationnew" />
+        <module name="eureka-server" />
+        <module name="organization-service" />
+        <module name="utils" />
+        <module name="licensing-service" />
+        <module name="configuration-server" />
+        <module name="specialroutesservice" />
+        <module name="zuulgateway" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="configuration-server" target="1.8" />
+      <module name="eureka-server" target="1.8" />
+      <module name="example" target="1.8" />
+      <module name="licensing-service" target="1.8" />
+      <module name="organization-service" target="1.8" />
+      <module name="organizationnew" target="1.8" />
+      <module name="specialroutesservice" target="1.8" />
+      <module name="utils" target="1.8" />
+      <module name="zuulgateway" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="configuration-server" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
+      <module name="licensing-service" options="-parameters" />
+      <module name="organization-service" options="-parameters" />
+      <module name="organizationnew" options="-parameters" />
+      <module name="specialroutesservice" options="-parameters" />
+      <module name="utils" options="-parameters" />
+      <module name="zuulgateway" options="-parameters" />
+    </option>
+  </component>
+</project>

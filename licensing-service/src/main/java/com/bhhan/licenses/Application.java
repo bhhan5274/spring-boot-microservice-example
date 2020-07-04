@@ -1,5 +1,6 @@
 package com.bhhan.licenses;
 
+import com.bhhan.utils.usercontext.UserContextInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -24,6 +25,10 @@ public class Application {
     @LoadBalanced
     @Bean
     public RestTemplate restTemplate(){
-        return new RestTemplate();
+        final RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getInterceptors()
+        .add(new UserContextInterceptor());
+
+        return restTemplate;
     }
 }

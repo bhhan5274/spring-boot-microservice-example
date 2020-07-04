@@ -1,0 +1,5 @@
+com\bhhan\organization\controller\OrganizationController.class
+com\bhhan\organization\service\OrganizationService.class
+com\bhhan\organization\Application.class
+com\bhhan\organization\model\Organization.class
+com\bhhan\organization\repository\OrganizationRepository.class

@@ -7,11 +7,16 @@ import com.bhhan.licenses.config.ServiceConfig;
 import com.bhhan.licenses.model.License;
 import com.bhhan.licenses.model.Organization;
 import com.bhhan.licenses.repository.LicenseRepository;
+import com.bhhan.utils.usercontext.UserContextHolder;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -34,7 +39,25 @@ public class LicenseService {
         return license.withComment(config.getExampleProperty());
     }
 
+    @HystrixCommand(fallbackMethod = "buildFallbackLicenseList",
+    threadPoolKey = "licenseByOrgThreadPool",
+    threadPoolProperties = {
+            @HystrixProperty(name = "coreSize", value = "30"),
+            @HystrixProperty(name = "maxQueueSize", value = "10")
+    },
+    commandProperties = {
+            @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),
+            @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "75"),
+            @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "7000"),
+            @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "15000"),
+            @HystrixProperty(name = "metrics.rollingStats.numBuckets", value = "5"),
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000")
+    })
     public List<License> getLicensesByOrg(String organizationId){
+
+        log.info("LicenseService.getLicensesByOrg Correlation id: {}", UserContextHolder.getContext().getCorrelationId());
+        randomlyRunLong();
+
         return licenseRepository.findByOrganizationId(organizationId);
     }
 
@@ -49,6 +72,25 @@ public class LicenseService {
     public void saveLicense(License license){
         license.withId(UUID.randomUUID().toString());
         licenseRepository.save(license);
+    }
+
+    public void updateLicense(License license){
+        licenseRepository.save(license);
+    }
+
+    public void deleteLicense(License license){
+        licenseRepository.delete(license);
+    }
+
+    private List<License> buildFallbackLicenseList(String organizationId){
+        List<License> fallbackList = new ArrayList<>();
+        final License license = License.builder()
+                .licenseId("0000000=00=00000")
+                .organizationId(organizationId)
+                .productName("Sorry no licensing information currently available")
+                .build();
+        fallbackList.add(license);
+        return fallbackList;
     }
 
     private Organization retreiveOrgInfo(String organizationId, String clientType){
@@ -73,11 +115,19 @@ public class LicenseService {
         return organization;
     }
 
-    public void updateLicense(License license){
-        licenseRepository.save(license);
+    private void randomlyRunLong(){
+        Random rand = new Random();
+
+        int randomNum = rand.nextInt((3 - 1) + 1) + 1;
+
+        if (randomNum==3) sleep();
     }
 
-    public void deleteLicense(License license){
-        licenseRepository.delete(license);
+    private void sleep(){
+        try {
+            Thread.sleep(11000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

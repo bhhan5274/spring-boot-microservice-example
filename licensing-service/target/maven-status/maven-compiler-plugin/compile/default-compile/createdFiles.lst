@@ -1,0 +1,14 @@
+com\bhhan\licenses\model\License.class
+com\bhhan\licenses\client\OrganizationRestTemplateClient.class
+com\bhhan\licenses\config\UserContextConfig.class
+com\bhhan\licenses\model\License$LicenseBuilder.class
+com\bhhan\licenses\Application.class
+com\bhhan\licenses\client\OrganizationFeignClient.class
+com\bhhan\licenses\controller\LicenseServiceController.class
+com\bhhan\licenses\client\OrganizationDiscoveryClient.class
+com\bhhan\licenses\service\LicenseService.class
+com\bhhan\licenses\service\OrganizationService.class
+com\bhhan\licenses\model\Organization.class
+com\bhhan\licenses\config\ServiceConfig.class
+com\bhhan\licenses\config\ThreadLocalConfiguration.class
+com\bhhan\licenses\repository\LicenseRepository.class

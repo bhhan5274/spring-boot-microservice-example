@@ -1,0 +1,6 @@
+com\bhhan\utils\hystrix\DelegatingUserContextCallable.class
+com\bhhan\utils\usercontext\UserContextHolder.class
+com\bhhan\utils\usercontext\UserContext.class
+com\bhhan\utils\usercontext\UserContextFilter.class
+com\bhhan\utils\usercontext\UserContextInterceptor.class
+com\bhhan\utils\hystrix\ThreadLocalAwareStrategy.class

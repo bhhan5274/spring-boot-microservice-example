@@ -2,7 +2,9 @@ package com.bhhan.organization.controller;
 
 import com.bhhan.organization.model.Organization;
 import com.bhhan.organization.service.OrganizationService;
+import com.bhhan.utils.usercontext.UserContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +16,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/v1/organizations")
 @RequiredArgsConstructor
+@Slf4j
 public class OrganizationController {
     private final OrganizationService organizationService;
 
     @GetMapping("/{organizationId}")
     public Organization getOrganization(@PathVariable("organizationId") String organizationId){
+        log.info("OrganizationController Correlation id: {}", UserContextHolder.getContext().getCorrelationId());
         return organizationService.getOrg(organizationId);
     }
 
