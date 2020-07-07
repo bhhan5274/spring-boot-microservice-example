@@ -19,11 +19,13 @@ while ! `nc -z database $DATABASESERVER_PORT`; do sleep 3; done
 echo ">>>>>>>>>>>> Database Server has started"
 
 echo "********************************************************"
-echo "Starting License Server with Configuration Service :  $CONFIGSERVER_URI";
+echo "Starting License Server with Configuration Service :  $CONFIGSERVER_URL";
 echo "********************************************************"
 
 java -Dspring.cloud.config.uri=$CONFIGSERVER_URL  \
      -Dserver.port=$SERVER_PORT \
      -Dspring.profiles.active=$PROFILE \
      -Deureka.client.serviceUrl.defaultZone=$EUREKASERVER_URI \
+     -Dsecurity.oauth2.resource.userInfoUri=$AUTHSERVER_URI   \
+     -Dsigning.key=$JWT_KEY                          \
      -jar /usr/local/licensingservice/@project.build.finalName@.jar

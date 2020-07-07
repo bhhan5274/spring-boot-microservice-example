@@ -26,4 +26,6 @@ java -Dserver.port=$SERVER_PORT   \
      -Deureka.client.serviceUrl.defaultZone=$EUREKASERVER_URI             \
      -Dspring.cloud.config.uri=$CONFIGSERVER_URL                          \
      -Dspring.profiles.active=$PROFILE                                   \
+     -Dsecurity.oauth2.resource.userInfoUri=$AUTHSERVER_URI   \
+     -Dsigning.key=$JWT_KEY                          \
      -jar /usr/local/organizationservice/@project.build.finalName@.jar

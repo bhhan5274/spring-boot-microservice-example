@@ -7,6 +7,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -14,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
  * Github : http://github.com/bhhan5274
  */
 
+@EnableResourceServer
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
@@ -31,4 +33,9 @@ public class Application {
 
         return restTemplate;
     }
+
+    /*@Bean
+    public OAuth2RestTemplate restTemplate(UserInfoRestTemplateFactory factory){
+        return factory.getUserInfoRestTemplate();
+    }*/
 }

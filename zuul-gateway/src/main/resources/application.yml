@@ -28,6 +28,7 @@ zuul:
   routes:
     organizationservice: /organization/**
   ignored-services: "organizationservice"
+  sensitive-headers: Cookie,Set-Cookie
 
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 13000
 

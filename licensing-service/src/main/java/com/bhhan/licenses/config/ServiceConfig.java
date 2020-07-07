@@ -14,4 +14,7 @@ import org.springframework.stereotype.Component;
 public class ServiceConfig {
     @Value("${example.property}")
     private String exampleProperty;
+
+    @Value("${signing.key}")
+    private String jwtSigningKey = "";
 }

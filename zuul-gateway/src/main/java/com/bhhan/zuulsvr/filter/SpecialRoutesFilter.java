@@ -218,10 +218,8 @@ public class SpecialRoutesFilter extends ZuulFilter {
                     AbTestRoute.class,
                     serviceName
             );
-        }catch(HttpClientErrorException e){
-            if(e.getStatusCode() == HttpStatus.NOT_FOUND){
-                return null;
-            }
+        }catch(Exception e){
+            return null;
         }
 
         return restExchange.getBody();

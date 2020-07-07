@@ -22,7 +22,6 @@ import java.util.List;
 @Slf4j
 public class LicenseServiceController {
     private final LicenseService licenseService;
-    private final ServiceConfig serviceConfig;
 
     @GetMapping("/")
     public List<License> getLicenses(@PathVariable("organizationId") String organizationId){

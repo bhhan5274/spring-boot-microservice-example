@@ -36,6 +36,11 @@
             <artifactId>spring-cloud-config-client</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+        <dependency>
             <groupId>com.bhhan</groupId>
             <artifactId>utils</artifactId>
             <version>0.0.1-SNAPSHOT</version>

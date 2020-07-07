@@ -25,6 +25,7 @@ services:
       EUREKASERVER_PORT: "8761"
       DATABASESERVER_PORT: "5432"
       ORGSERVERNEW_PORT: "8087"
+      JWT_KEY: "bhhan"
   database:
     image: postgres:9.5
     ports:
@@ -43,11 +44,14 @@ services:
       CONFIGSERVER_PORT: "8888"
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka"
       EUREKASERVER_PORT: "8761"
+      AUTHSERVER_PORT: "8091"
       DATABASESERVER_PORT: "5432"
       ENCRYPT_KEY: "IMSYMMETRIC"
       SERVER_PORT: "8080"
+      AUTHSERVER_URI: "http://authenticationservice:8901/auth/user"
       ORGSERVERNEW_PORT: "8087"
       ZUULSERVER_PORT: "5555"
+      JWT_KEY: "bhhan"
   organizationservice:
     image: bhhan87/organization-service:v1.0
     ports:
@@ -61,6 +65,8 @@ services:
       DATABASESERVER_PORT: "5432"
       SERVER_PORT: "8085"
       ENCRYPT_KEY: "IMSYMMETRIC"
+      AUTHSERVER_URI: "http://authenticationservice:8901/auth/user"
+      JWT_KEY: "bhhan"
   orgservice-new:
     image: bhhan87/organization-new:v1.0
     ports:
@@ -87,3 +93,17 @@ services:
       DATABASESERVER_PORT:      "5432"
       CONFIGSERVER_PORT:        "8888"
       ENCRYPT_KEY:       "IMSYMMETRIC"
+  authenticationservice:
+    image: bhhan87/authentication-service:v1.0
+    ports:
+      - "8901:8901"
+    environment:
+      PROFILE: "default"
+      SERVER_PORT: "8901"
+      DATABASE_PORT: "5432"
+      CONFIGSERVER_PORT: "8888"
+      EUREKASERVER_PORT: "8761"
+      CONFIGSERVER_URI: "http://configserver:8888"
+      EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+      ENCRYPT_KEY: "IMSYMMETRIC"
+      JWT_KEY: "bhhan"
