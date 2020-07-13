@@ -1,5 +1,6 @@
 package com.bhhan.organization.service;
 
+import com.bhhan.organization.event.source.SimpleSourceBean;
 import com.bhhan.organization.model.Organization;
 import com.bhhan.organization.repository.OrganizationRepository;
 import com.bhhan.utils.usercontext.UserContextHolder;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @Slf4j
 public class OrganizationService {
     private final OrganizationRepository organizationRepository;
+    private final SimpleSourceBean simpleSourceBean;
 
     public Organization getOrg(String organizationId){
         log.info("OrganizationService getOrg Correlation id: {}", UserContextHolder.getContext().getCorrelationId());
@@ -29,13 +31,16 @@ public class OrganizationService {
     public void saveOrg(Organization organization){
         organization.setId(UUID.randomUUID().toString());
         organizationRepository.save(organization);
+        simpleSourceBean.publishOrgChange("SAVE", organization.getId());
     }
 
     public void updateOrg(Organization organization){
         organizationRepository.save(organization);
+        simpleSourceBean.publishOrgChange("UPDATE", organization.getId());
     }
 
     public void deleteOrg(Organization organization){
         organizationRepository.delete(organization);
+        simpleSourceBean.publishOrgChange("DELETE", organization.getId());
     }
 }

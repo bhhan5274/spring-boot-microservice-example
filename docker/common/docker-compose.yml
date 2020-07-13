@@ -52,6 +52,10 @@ services:
       ORGSERVERNEW_PORT: "8087"
       ZUULSERVER_PORT: "5555"
       JWT_KEY: "bhhan"
+      KAFKASERVER_URI: "kafkaserver"
+      ZKSERVER_URI: "zookeeper"
+      KAFKASERVER_PORT:    "2181"
+      REDIS_PORT: "6379"
   organizationservice:
     image: bhhan87/organization-service:v1.0
     ports:
@@ -67,6 +71,9 @@ services:
       ENCRYPT_KEY: "IMSYMMETRIC"
       AUTHSERVER_URI: "http://authenticationservice:8901/auth/user"
       JWT_KEY: "bhhan"
+      KAFKASERVER_URI: "kafkaserver"
+      ZKSERVER_URI: "zookeeper"
+      KAFKASERVER_PORT:    "2181"
   orgservice-new:
     image: bhhan87/organization-new:v1.0
     ports:
@@ -107,3 +114,26 @@ services:
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
       ENCRYPT_KEY: "IMSYMMETRIC"
       JWT_KEY: "bhhan"
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    restart: always
+    ports:
+      - "2181:2181"
+  kafkaserver:
+    image: wurstmeister/kafka
+    container_name: kafka
+    restart: always
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    links:
+      - zookeeper:zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181

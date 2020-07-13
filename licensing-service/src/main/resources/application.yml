@@ -17,3 +17,16 @@ logging:
     com.netflix: WARN
     org.springframework.web: DEBUG
     com.bhhan: DEBUG
+
+spring:
+  cloud:
+    stream:
+      bindings:
+        inboundOrgChanges:
+          destination: orgChangeTopic
+          content-type: application/json
+          group: licensingGroup
+      kafka:
+        binder:
+          zkNodes: localhost
+          brokers: localhost

@@ -20,6 +20,12 @@ while ! `nc -z configserver $CONFIGSERVER_PORT`; do sleep 3; done
 echo "*******  Configuration Server has started"
 
 echo "********************************************************"
+echo "Waiting for the zookeeper server to start on port  $KAFKASERVER_PORT"
+echo "********************************************************"
+while ! `nc -z zookeeper $KAFKASERVER_PORT`; do sleep 10; done
+echo "******* zookeeper Server has started"
+
+echo "********************************************************"
 echo "Starting Organization Service  "
 echo "********************************************************"
 java -Dserver.port=$SERVER_PORT   \
@@ -28,4 +34,6 @@ java -Dserver.port=$SERVER_PORT   \
      -Dspring.profiles.active=$PROFILE                                   \
      -Dsecurity.oauth2.resource.userInfoUri=$AUTHSERVER_URI   \
      -Dsigning.key=$JWT_KEY                          \
+     -Dspring.cloud.stream.kafka.binder.zkNodes=$ZKSERVER_URI          \
+     -Dspring.cloud.stream.kafka.binder.brokers=$KAFKASERVER_URI             \
      -jar /usr/local/organizationservice/@project.build.finalName@.jar
